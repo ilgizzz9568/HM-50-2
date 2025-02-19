@@ -10,9 +10,9 @@ class FSM_reg(StatesGroup):
     category = State()
     price = State()
     photo = State()
-    submit = State()
     productid = State()
     infoproductid = State()
+    submit = State()
 
 
 async def start_fsm_regi(message: types.Message):
@@ -56,13 +56,38 @@ async def load_photo(message: types.Message, state: FSMContext):
     async with state.proxy() as data:
         data['photo'] = message.photo[-1].file_id
 
+
+
+
+async def load_productid(message: types.Message, state: FSMContext):
+    async with state.proxy() as data:
+        data['productid'] = message.text
+
+
+    await FSM_reg.next()
+    await message.answer('Укажите ID продукта:')
+
+
+
+async def load_infoproductid(message: types.Message, state: FSMContext):
+    async with state.proxy() as data:
+        data['infoproductid'] = message.text
+
+
+
+    await FSM_reg.next()
+    await message.answer('Укажите информацию о продукте:')
+
+
     await FSM_reg.next()
     await message.answer('Верны ли данные о товаре?:')
     await message.answer_photo(photo=data['photo'],
                                caption=f'model - {data["model"]}\n'
                                        f'size - {data["size"]}\n'
                                        f'category - {data["category"]}\n'
-                                       f'price - {data["price"]}\n' )
+                                       f'price - {data["price"]}\n'
+                                       f'productid - {data["productid"]}\n'
+                                       f'infoproductid - {data["infoproductid"]}\n')
 
 
 async def submit(message: types.Message, state: FSMContext):
@@ -87,6 +112,8 @@ def register_handlers_fsm(dp: Dispatcher):
     dp.register_message_handler(load_category,state=FSM_reg.category)
     dp.register_message_handler(load_price,state=FSM_reg.price)
     dp.register_message_handler(load_photo,state=FSM_reg.photo, content_types=['photo'])
+    dp.register_message_handler(load_productid, state=FSM_reg.productid)
+    dp.register_message_handler(load_infoproductid,state=FSM_reg.infoproductid)
     dp.register_message_handler(submit,state=FSM_reg.submit)
 
 
