@@ -1,7 +1,7 @@
 #main.py
 from aiogram import executor
 import logging
-from handlers import commands, echo, quiz, dice, FSMstore
+from handlers import commands, echo, quiz, dice, store_fsm
 from config import dp, Admins, bot
 
 
@@ -19,20 +19,20 @@ async def on_shutdown(_):
 commands.register_handlers(dp)
 quiz.register_handlers(dp)
 dice.register_handlers(dp)
-FSMstore.register_handlers_fsm(dp)
+store_fsm.register_handlers_store(dp)
 
 # ==========================
 echo.register_handlers(dp)
 # ====================================================================
 
 
-if __name__ == '__main__':
-    logging.basicConfig(level=logging.INFO)
-    executor.start_polling(dp, skip_updates=True, on_startup=on_startup, on_shutdown=on_shutdown)
-
-
-
-
 # if __name__ == '__main__':
-#      logging.basicConfig(level=logging.INFO)
-#      executor.start_polling(dp, skip_updates = True)
+#     logging.basicConfig(level=logging.INFO)
+#     executor.start_polling(dp, skip_updates=True, on_startup=on_startup, on_shutdown=on_shutdown)
+
+
+
+
+if __name__ == '__main__':
+     logging.basicConfig(level=logging.INFO)
+     executor.start_polling(dp, skip_updates = True)
