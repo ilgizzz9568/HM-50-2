@@ -1,13 +1,14 @@
 # commands.py
 from aiogram import types, Dispatcher
 from config import bot
+import buttons
 
 
 async def start_handler(message: types.Message):
     print('это дз')
     await bot.send_message(chat_id=message.from_user.id,
                            text=f"Hello{message.from_user.first_name}\n"
-                                f"твой телеграмм ID -{message.from_user.id}\n")
+                                f"твой телеграмм ID -{message.from_user.id}\n", reply_markup=buttons.start)
 
     await message.answer('wasup')
 
