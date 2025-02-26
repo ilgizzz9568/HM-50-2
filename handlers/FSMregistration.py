@@ -2,7 +2,8 @@ from aiogram  import types, Dispatcher
 from aiogram.dispatcher import FSMContext
 from aiogram.dispatcher.filters import Text, state
 from aiogram.dispatcher.filters.state import State, StatesGroup
-
+import buttons
+from db import main_db
 
 class FSM_reg(StatesGroup):
     model = State()
@@ -10,8 +11,6 @@ class FSM_reg(StatesGroup):
     category = State()
     price = State()
     photo = State()
-    productid = State()
-    infoproductid = State()
     submit = State()
 
 
@@ -84,8 +83,8 @@ async def submit(message: types.Message, state: FSMContext):
 
 
 def register_handlers_fsm(dp: Dispatcher):
-    dp.register_message_handler(start_fsm_regi, commands=['regis'])
-    dp.register_message_handler(load_model,state=FSM_reg.model)
+    dp.register_message_handler(start_fsm_regi, commands=['registration'])
+    dp.register_message_handler(load_model, state=FSM_reg.model)
     dp.register_message_handler(load_size,state=FSM_reg.size)
     dp.register_message_handler(load_category,state=FSM_reg.category)
     dp.register_message_handler(load_price,state=FSM_reg.price)

@@ -30,3 +30,5 @@ async def sql_insert_store_detail(product_id, info_product, category):
     cursor.execute(queries.INSERT_store_detail,
                    (product_id, info_product, category))
     db.commit()
+
+    db.close()
